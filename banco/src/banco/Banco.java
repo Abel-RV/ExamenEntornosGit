@@ -11,7 +11,7 @@ import util.Utilidades;
  *
  * @author Abel
  */
-public class Banco implements Serializable {
+public class Banco implements Serializable, Operable {
     private static final String ERRORES = "Se ha producido un error al leer el archivo:";
 	private static final long serialVersionUID = 1L; 
     private String nombre;
@@ -38,10 +38,10 @@ public class Banco implements Serializable {
     }
 
     // Método para deserializar el curso
-    public static Banco cargarEstado(String nombreArchivo) throws IOException, ClassNotFoundException {
-        Banco banco;
+    public static Operable cargarEstado(String nombreArchivo) throws IOException, ClassNotFoundException {
+        Operable banco;
         try (ObjectInputStream in = new ObjectInputStream(new FileInputStream(nombreArchivo))) {
-            banco = (Banco) in.readObject();
+            banco = (Operable) in.readObject();
             //System.out.println("Curso deserializado correctamente.");
         } catch (IOException e) {
             throw new IOException(ERRORES + nombreArchivo);
@@ -88,7 +88,8 @@ public class Banco implements Serializable {
         return -1;
     }
 
-    public boolean ingresar(String codigo, double importe) {
+    @Override
+	public boolean ingresar(String codigo, double importe) {
         Cuenta c = localizarCuenta(codigo);
         if (c == null) // no se encuentra una cuenta con ese codigo
         {
@@ -99,7 +100,8 @@ public class Banco implements Serializable {
         }
     }
 
-    public boolean retirar(String codigo, double importe) {
+    @Override
+	public boolean retirar(String codigo, double importe) {
         Cuenta c = localizarCuenta(codigo);
         if (c == null) // no se encuentra una cuenta con ese codigo
         {
@@ -108,10 +110,6 @@ public class Banco implements Serializable {
             c.retirar(importe);
             return true;
         }
-    }
-
-    public boolean existeCuenta(String codigo) {
-        return (localizarCuenta(codigo) != null);
     }
 
     public String consultarCuenta(String codigo) {

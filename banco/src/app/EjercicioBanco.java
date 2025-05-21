@@ -2,6 +2,7 @@ package app;
 import java.io.IOException;
 import java.util.InputMismatchException;
 import java.util.Scanner;
+import banco.Banco;
 
 
 public class EjercicioBanco {
