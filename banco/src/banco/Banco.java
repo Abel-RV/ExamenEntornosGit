@@ -89,7 +89,7 @@ public class Banco implements Serializable, Operable {
     }
 
     @Override
-	public boolean ingresar(String codigo, double importe) {
+	public boolean ingresar(String codigo, double importe)  {
         Cuenta c = localizarCuenta(codigo);
         if (c == null) // no se encuentra una cuenta con ese codigo
         {
